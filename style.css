@@ -1,0 +1,76 @@
+/*Make 1 rem = 10px */
+:root{
+    font-size: 10px;
+}
+
+*{
+ padding: 0;
+ margin: 0;
+ box-sizing: border-box;
+}
+
+
+/* Set container to have a height/width and use flex/ flex grow properties to get flex items to take up the available space*/
+
+.container{
+    max-width: 39rem;
+    min-width: 39rem;
+    padding: 2rem;
+    height: 90vh;
+    display: flex;
+   
+}
+
+.controls{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.displays{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex: 1;
+    width: 100%;
+}
+
+.display-res{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    flex: 2;
+}
+
+.display-res h1, .display-res span{
+    font-size: 4rem;
+}
+
+.display-sum{
+    display: flex;
+    flex:1;
+    align-items: center;
+}
+
+.btn-container{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 1.5rem;
+    flex: 1.66;
+}
+
+.btn-column{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: .75rem;
+}
+
+.btn{
+    flex: 1;
+}
