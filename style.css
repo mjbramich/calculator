@@ -7,18 +7,28 @@
  padding: 0;
  margin: 0;
  box-sizing: border-box;
+ color: white;
+ font-weight: 700;
 }
 
+body{
+    background: rgb(198,235,241);
+    margin: auto;
+    display: flex;
+    align-items: flex-end;
+    margin-top: 10vh;
+}
 
 /* Set container to have a height/width and use flex/ flex grow properties to get flex items to take up the available space*/
 
 .container{
     max-width: 39rem;
     min-width: 39rem;
-    padding: 2rem;
-    height: 90vh;
+    padding: 3rem;
+    height: 80vh;
     display: flex;
-   
+    margin: 0 auto;
+    background: rgb(26,27,40,255);
 }
 
 .controls{
@@ -27,6 +37,7 @@
     align-items: center;
     justify-content: space-between;
     flex: 1;
+    background: rgb(26,27,40,255);
 }
 
 .displays{
@@ -40,10 +51,12 @@
 
 .display-res{
     display: flex;
-    width: 100%;
     align-items: center;
     justify-content: space-between;
     flex: 2;
+    width: 100%;
+    border-bottom: 2px solid  rgba(47,49,60,255);
+
 }
 
 .display-res h1, .display-res span{
@@ -56,21 +69,35 @@
     align-items: center;
 }
 
+.display-sum h2{
+    font-size: 3rem;
+}
+
 .btn-container{
     display: flex;
     justify-content: center;
     width: 100%;
-    gap: 1.5rem;
-    flex: 1.66;
+    gap: 2rem;
+    flex: 1.5;
 }
 
 .btn-column{
     display: flex;
     flex-direction: column;
     flex: 1;
-    gap: .75rem;
+    gap: 1.5rem;
 }
 
 .btn{
-    flex: 1;
+    /* Makes buttons perfect square*/
+    aspect-ratio: 1;
+    background: rgba(30,36,53,255);
+    border: none;
+    border-radius: 1rem;
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.btn.operators{
+    background: rgba(82,201,220,255);
 }
