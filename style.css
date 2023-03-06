@@ -60,7 +60,11 @@ body{
 }
 
 .display-res h1, .display-res span{
-    font-size: 4rem;
+    font-size: 4.5rem;
+}
+
+.display-res span{
+    color: rgba(82,201,220,255);
 }
 
 .display-sum{
