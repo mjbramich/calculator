@@ -3,11 +3,27 @@ const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
 const multiply = (a, b) => a * b;
 const divide = (a, b) => a / b;
-
 const operate = (a, b, operator) => operator(a, b);
+// change operator from a string to a function call
+const changeOperator = (operator) => {
+  switch (operator) {
+    case '+':
+      return add;
+
+    case '-':
+      return subtract;
+
+    case '*':
+      return multiply;
+
+    case '/':
+      return divide;
+  }
+};
 
 
 const displayFinal = () => (displayResult.innerHTML = operate);
+
 // HTML elements
 const btnContainer = document.querySelector('.btn-container');
 const displayResult = document.querySelector('.display-res > h1');
@@ -16,7 +32,6 @@ const DISPLAY_LIMIT = 14
 const decimalBtn = document.querySelector('.decimal')
 let DECIMAL_ALLOWED = true
 // variables to hold buttons press/
-
 let displayValue = {
   one: [],
   two: [],
@@ -80,120 +95,100 @@ const updateDisplayOps = (value) => {
 
 
 const changeMode = (e, mode) => {
-  let buttonPress = e.target;
-  console.log(displayValue.one);
-  if (mode === 'operator') {
-    lastOperator = operator
-    operator = buttonPress.innerHTML;
-    DECIMAL_ALLOWED = true
-    updateDisplayOps(`${buttonPress.innerHTML}`);
-   
-    if(displayValue.two.length){
+    let buttonPress = e.target;
 
-      if(displayResult.innerHTML){
-        num1 = parseFloat(displayResult.innerHTML);
-      }else{
-        num1 = parseFloat(displayValue.one.join(''))
-      }
+    if (mode === 'operator') {
+        lastOperator = operator;
+        operator = buttonPress.innerHTML;
+        DECIMAL_ALLOWED = true;
+        updateDisplayOps(`${buttonPress.innerHTML}`);
 
+        if (displayValue.two.length) {
+            if (displayResult.innerHTML) {
+                num1 = parseFloat(displayResult.innerHTML);
+            } else {
+                num1 = parseFloat(displayValue.one.join(''));
+            }
 
-      num2 = parseFloat(displayValue.two.join(''))
-      clearDisplayOps()
-      updateDisplayOps(`${num1} ${lastOperator} ${num2}`)
-      updateResult(operate(num1,num2, changeOperator(lastOperator)).toFixed(1))
-      
-    }else if(displayResult.innerHTML){
-      num1 = parseFloat(displayResult.innerHTML);
+            num2 = parseFloat(displayValue.two.join(''));
+            clearDisplayOps();
+            updateDisplayOps(`${num1} ${lastOperator} ${num2}`);
+            updateResult(
+                operate(num1, num2, changeOperator(lastOperator)).toFixed(1)
+            );
+        } else if (displayResult.innerHTML) {
+            num1 = parseFloat(displayResult.innerHTML);
 
-      clearDisplayOps()
-      updateDisplayOps(`${num1} ${buttonPress.innerHTML} `)
-    }else{
-      console.log('Else');
-      num1 = parseFloat(displayValue.one.join(''));
-      clearDisplayOps()
-      updateDisplayOps(`${num1} ${buttonPress.innerHTML} `)
-    }
-
-    displayValue.two = []
-    
-
-  } 
-  
-  else if (mode === 'numbers') {
-    
-      updateDisplayOps(buttonPress.innerHTML)
-      console.log(buttonPress.innerHTML);
-    
-    // getting array of buttons pressed before a operator is pressed.
-    if (buttonPress.classList.contains('numbers') && operator == '') {
-
-      if(buttonPress.innerHTML !== '.'){
-        displayValue.one.push(buttonPress.innerHTML)
-      }
-
-      else if(DECIMAL_ALLOWED === true && buttonPress.innerHTML === '.'){
-        displayValue.one.push('.')
-        
-        DECIMAL_ALLOWED = false
-        
-      }
-
-      
-    }
-    //if an operator has been selected
-    else if (operator) {
-      
-      
-      if(buttonPress.innerHTML !== '.'){
-        displayValue.two.push(buttonPress.innerHTML)
-        
-      }
-
-      else if(DECIMAL_ALLOWED === true && !displayValue.two.includes('.')){
-        displayValue.two.push('.')
-        
-        DECIMAL_ALLOWED = false
-        
-      }
-
-
-      if (displayResult.innerHTML) {
-        
-        // parseFloat of 3. = 3, so we just join the string.
-        if(displayValue.two.includes('.')){
-          num2 = displayValue.two.join('')
-        }else{
-          num2 = parseFloat(displayValue.two.join(''));
+            clearDisplayOps();
+            updateDisplayOps(`${num1} ${buttonPress.innerHTML} `);
+        } else {
+            num1 = parseFloat(displayValue.one.join(''));
+            clearDisplayOps();
+            updateDisplayOps(`${num1} ${buttonPress.innerHTML} `);
         }
 
-        
-        console.log(num2);
-        num1 = parseFloat(displayResult.innerHTML);
-        clearDisplayOps()
-        updateDisplayOps(`${num1} ${operator} ${num2}`)
-        
-        
-      }
-    }
+        displayValue.two = [];
+    } else if (mode === 'numbers') {
+        updateDisplayOps(buttonPress.innerHTML);
 
-    
-  } else if (mode === 'equals') {
-   
-    if(displayValue.two.length){
-      num2 = parseFloat(displayValue.two.join(''))
-      updateResult(operate(num1, num2, changeOperator(operator)).toFixed(1));
-      clearDisplayOps()
-      updateDisplayOps(`${num1} ${operator} ${num2} `)
-      
-    // after result clear array for next number
-    displayValue.two = []
-    DECIMAL_ALLOWED = true
+        // getting array of buttons pressed before a operator is pressed.
+        if (buttonPress.classList.contains('numbers') && operator == '') {
+            if (buttonPress.innerHTML !== '.') {
+                displayValue.one.push(buttonPress.innerHTML);
+            } else if (
+                DECIMAL_ALLOWED === true &&
+                buttonPress.innerHTML === '.'
+            ) {
+                displayValue.one.push('.');
+
+                DECIMAL_ALLOWED = false;
+            }
+        }
+        //if an operator has been selected
+        else if (operator) {
+            if (buttonPress.innerHTML !== '.') {
+                displayValue.two.push(buttonPress.innerHTML);
+            } else if (
+                DECIMAL_ALLOWED === true &&
+                !displayValue.two.includes('.')
+            ) {
+                displayValue.two.push('.');
+
+                DECIMAL_ALLOWED = false;
+            }
+
+            if (displayResult.innerHTML) {
+                // parseFloat of 3. = 3, so we just join the string.
+                if (displayValue.two.includes('.')) {
+                    num2 = displayValue.two.join('');
+                } else {
+                    num2 = parseFloat(displayValue.two.join(''));
+                }
+
+                num1 = parseFloat(displayResult.innerHTML);
+                clearDisplayOps();
+                updateDisplayOps(`${num1} ${operator} ${num2}`);
+            }
+        }
+    } else if (mode === 'equals') {
+        if (displayValue.two.length) {
+            num2 = parseFloat(displayValue.two.join(''));
+            updateResult(
+                operate(num1, num2, changeOperator(operator)).toFixed(1)
+            );
+            clearDisplayOps();
+            updateDisplayOps(`${num1} ${operator} ${num2} `);
+
+            // after result clear array for next number
+            displayValue.two = [];
+            DECIMAL_ALLOWED = true;
+        }
     }
 };
 
-}
-
 const backspaceClear = () => {
+
+  // if num1? pop num1 else pop num2
   const lastChar = displayOperations.innerHTML.slice(-1)
   if(lastChar === operator || lastChar === ' '){
     displayOperations.innerHTML = displayOperations.innerHTML.slice(0,-2)  
@@ -215,42 +210,13 @@ const clearCalc = () => {
   DECIMAL_ALLOWED = true
 };
 
-// change operator from a string to a function call
-const changeOperator = (operator) => {
-  switch (operator) {
-    case '+':
-      return add;
 
-    case '-':
-      return subtract;
-
-    case '*':
-      return multiply;
-
-    case '/':
-      return divide;
-  }
-};
 
 
 const limitDisplay = () => {
   if(displayResult.innerHTML.length >= DISPLAY_LIMIT){
     displayOperations.innerHTML = 'EXCEEDED DISPLAY LIMIT';
+    displayResult.innerHTML = ''
     
   }
 }
-
-
-
-// const operatorButtons = Array.from(document.querySelectorAll('.operators'));
-
-// // Function for when a operator button is clicked, cant click same button.
-// const disableButtons = () => {
-//   operatorButtons.forEach((btn) => {
-//     if (!btn.classList.contains('clear') && btn.innerHTML === operator) {
-//       btn.disabled = true;
-//     } else {
-//       btn.disabled = false;
-//     }
-//   });
-// };

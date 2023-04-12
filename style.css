@@ -29,9 +29,11 @@ body{
     display: flex;
     margin: 0 auto;
     background: rgb(26,27,40,255);
+    
 }
 
 .controls{
+    max-width: 33rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -100,11 +102,13 @@ body{
     border-radius: 1rem;
     font-size: 3rem;
     font-weight: 700;
+
 }
 
 .btn.operators{
     background: rgba(82,201,220,255);
 }
+
 
 .btn.equals{
     background: rgba(82,201,220,255);
